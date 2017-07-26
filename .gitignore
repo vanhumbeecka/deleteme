@@ -1,3 +1,4 @@
-.wercker
+.wercker/**
+wrecker
 .vscode
 debug.test

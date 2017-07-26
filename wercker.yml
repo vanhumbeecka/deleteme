@@ -14,12 +14,29 @@ dev:
 
 build:
   steps:
+    - script:
+      name: Copy source to GOPATH
+      code: |
+        mkdir -p ${GOPATH}/src/github.com/vanhumbeecka/deleteme
+        cp -R . ${GOPATH}/src/github.com/vanhumbeecka/deleteme
+    - script:
+      name: Change working directory
+      code: |
+        export CWD_LOCAL=${GOPATH}/src/github.com/vanhumbeecka/deleteme
+        env
+    - script:
+      name: go get
+      cwd: $CWD_ROOT
+      code: |
+        go get -t ./...
     - wercker/golint
     - script:
       name: go build
+      cwd: $CWD_ROOT
       code: |
         go build ./...
     - script:
       name: go test
+      cwd: $CWD_ROOT
       code: |
         go test ./...
